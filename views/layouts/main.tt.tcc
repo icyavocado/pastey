@@ -6,8 +6,8 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1543818803',
         'name' => 'layouts/main.tt',
+        'modtime' => '1543858290',
     },
     BLOCK => sub {
     my $context = shift || die "template sub called without context\n";
@@ -22,25 +22,7 @@ $output .=  $stash->get(['settings', 0, 'charset', 0]);
 $output .=  "\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\">\n  <title>";
 #line 6 "/icyavocado/pastey/views/layouts/main.tt"
 $output .=  $stash->get('title');
-$output .=  "</title>\n  <script src=\"";
-#line 7 "/icyavocado/pastey/views/layouts/main.tt"
-$output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/javascripts/codemirror.js\"></script>\n  <link rel=\"stylesheet\" href=\"";
-#line 8 "/icyavocado/pastey/views/layouts/main.tt"
-$output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/css/codemirror.css\">\n  <link rel=\"stylesheet\" href=\"";
-#line 9 "/icyavocado/pastey/views/layouts/main.tt"
-$output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/css/blackboard.css\">\n  <link rel=\"stylesheet\"\n      href=\"//cdn.jsdelivr.net/gh/highlightjs/cdn-release\@9.13.1/build/styles/default.min.css\">\n  <script src=\"//cdn.jsdelivr.net/gh/highlightjs/cdn-release\@9.13.1/build/highlight.min.js\"></script>\n  <link rel=\"stylesheet\" href=\"";
-#line 13 "/icyavocado/pastey/views/layouts/main.tt"
-$output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/fonts/fira_code.css\">\n  <link rel=\"stylesheet\" href=\"";
-#line 14 "/icyavocado/pastey/views/layouts/main.tt"
-$output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/css/style.css\">\n  <link rel=\"stylesheet\" href=\"";
-#line 15 "/icyavocado/pastey/views/layouts/main.tt"
-$output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/css/main.css\">\n</head>\n<body>\n  <div id=\"app\">\n    ";
+$output .=  "</title>\n  <script src=\"/javascripts/codemirror.js\"></script>\n  <link rel=\"stylesheet\" href=\"/css/codemirror.css\">\n  <link rel=\"stylesheet\" href=\"/css/blackboard.css\">\n  <link rel=\"stylesheet\"\n      href=\"//cdn.jsdelivr.net/gh/highlightjs/cdn-release\@9.13.1/build/styles/default.min.css\">\n  <script src=\"//cdn.jsdelivr.net/gh/highlightjs/cdn-release\@9.13.1/build/highlight.min.js\"></script>\n  <link rel=\"stylesheet\" href=\"/fonts/fira_code.css\">\n  <link rel=\"stylesheet\" href=\"/css/style.css\">\n  <link rel=\"stylesheet\" href=\"/css/main.css\">\n</head>\n<body>\n  <div id=\"app\">\n    ";
 #line 19 "/icyavocado/pastey/views/layouts/main.tt"
 $output .=  $stash->get('content');
 $output .=  "\n  </div>\n</body>\n</html>\n";

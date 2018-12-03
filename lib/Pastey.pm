@@ -1,4 +1,5 @@
 package pastey;
+use lib qw(~/perl5/lib/perl5/ ~/perl5/ ~/perl5/perlbrew/perls/perl-5.26.1 /home/avocado/perl5/perlbrew/perls/perl-5.26.1/lib/5.26.1);
 use Dancer2;
 use Pastey::Schema;
 use Data::UUID;
@@ -10,7 +11,7 @@ our $VERSION = '0.1';
 hook before => sub {
   if ( !session('schema') ) {
     my $schema
-      = Pastey::Schema->connect("dbi:SQLite:dbname=dbfile/pastey_bin.sqlite");
+      = Pastey::Schema->connect("dbi:SQLite:dbname=../dbfile/pastey_bin.sqlite");
     session( 'PasteyBin', $schema->resultset('PasteyBin') );
   }
 };

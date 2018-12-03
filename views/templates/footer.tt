@@ -1,10 +1,9 @@
 <% USE JSON %>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="<% request.uri_base %>/javascripts/vue-codemirror.js"></script>
+<script src="/javascripts/vue-codemirror.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
 <script src="https://codemirror.net/mode/javascript/javascript.js"></script>
-<script src="https://codemirror.net/mode/java/java.js"></script>
 <script>
 
 Vue.use(window.VueCodemirror)
