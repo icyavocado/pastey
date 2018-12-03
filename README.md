@@ -16,6 +16,7 @@ sudo apt install sqlite3
 sudo apt install cpanminus
 sudo apt install build-essential
 sudo apt install unzip
+perl -mCPAN -e'CPAN::Shell->look("DBIx::Class")'
 cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 ```
 ### Install CPAN modules
@@ -23,5 +24,6 @@ cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mloca
 cpanm WWW::Form::UrlEncoded::XS
 cpanm Data::UUID
 cpanm DBIx::Class
+cpanm DBIx::Class::Schema::Loader
 cpanm Sanitize
 ```
