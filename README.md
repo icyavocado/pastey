@@ -21,4 +21,5 @@ cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mloca
 ```bash
 cpanm WWW::Form::UrlEncoded::XS
 cpanm Data::UUID
+cpanm DBIx::Class
 ```
