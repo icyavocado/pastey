@@ -25,5 +25,6 @@ cpanm WWW::Form::UrlEncoded::XS
 cpanm Data::UUID
 cpanm DBIx::Class
 cpanm DBIx::Class::Schema::Loader
+cpanm Template::Plugin::JSON
 cpanm Sanitize
 ```
