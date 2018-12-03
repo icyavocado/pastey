@@ -1,7 +1,7 @@
 <header>
-  Pasty
-  <a>Save</a>
-  <a>New</a>
-  <a>Duplicate & Edit</a>
-  <a>Just Text</a>
+  <h1 style="color: white">[ 🐈 Pastey ]</h1>
+  <div><a @click="onSave">[ Save ]</a></div>
+  <div><a @click="onCreate">[ New ]</a></div>
+  <div><a @click="onDupandEdit">[ Duplicate & Edit ]</a></div>
+  <div><a @click="getTextOnly">[ Raw Text ]</a></div>
 </header>

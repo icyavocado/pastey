@@ -6,8 +6,8 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
+        'modtime' => '1543816005',
         'name' => 'templates/header.tt',
-        'modtime' => '1543810222',
     },
     BLOCK => sub {
     my $context = shift || die "template sub called without context\n";
@@ -16,7 +16,7 @@ Template::Document->new({
     my $_tt_error;
     
     eval { BLOCK: {
-$output .=  "<header>\n  Pasty\n  <a>Save</a>\n  <a>New</a>\n  <a>Duplicate & Edit</a>\n  <a>Just Text</a>\n</header>";
+$output .=  "<header>\n  Pasty\n  <a \@click=\"onSave\">Save</a>\n  <a \@click=\"onCreate\">New</a>\n  <a \@click=\"onDupandEdit\">Duplicate & Edit</a>\n  <a \@click=\"getTextOnly\">Just Text</a>\n</header>";
     } };
     if ($@) {
         $_tt_error = $context->catch($@, \$output);

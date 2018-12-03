@@ -7,9 +7,16 @@
   <script src="<% request.uri_base %>/javascripts/codemirror.js"></script>
   <link rel="stylesheet" href="<% request.uri_base %>/css/codemirror.css">
   <link rel="stylesheet" href="<% request.uri_base %>/css/blackboard.css">
+  <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.13.1/build/styles/default.min.css">
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.13.1/build/highlight.min.js"></script>
+  <link rel="stylesheet" href="<% request.uri_base %>/fonts/fira_code.css">
   <link rel="stylesheet" href="<% request.uri_base %>/css/style.css">
+  <link rel="stylesheet" href="<% request.uri_base %>/css/main.css">
 </head>
 <body>
-<% content %>
+  <div id="app">
+    <% content %>
+  </div>
 </body>
 </html>

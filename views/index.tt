@@ -1,19 +1,4 @@
-<style>
-body {
-  min-width: 100vw;
-  width: 100%;
-  min-height: 100vh;
-  padding: 0;
-  margin: 0;
-}
-.CodeMirror {
-  min-width: 100vw;
-  width: 100%;
-  min-height: 100vh;
-}
-</style>
-
 <% INCLUDE 'templates/header.tt' %>
-<div id="app"></div>
+  <codemirror v-model="state.code" :options="cmOptions"></codemirror>
 <% INCLUDE 'templates/footer.tt' %>
 

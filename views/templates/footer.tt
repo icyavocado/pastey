@@ -1,11 +1,71 @@
+<% USE JSON %>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="<% request.uri_base %>/javascripts/vue-codemirror.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+<script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+<script src="https://codemirror.net/mode/java/java.js"></script>
 <script>
-var myCodeMirror = CodeMirror(document.getElementById('app'), {
-  tabSize: 2,
-  lineNumbers: true,
-  theme: 'blackboard',
-  mode: <% IF extention %>'<% extention %>'<% ELSE %>'javascript'<% END %>
-});
+
+Vue.use(window.VueCodemirror)
+
+new Vue({
+  el: '#app',
+  data: {
+    error: '',
+    state: {
+      name: '',
+      code: <% IF value %><% value.json %><% ELSE %>''<% END %>,
+      mode: <% IF mode %><% mode.json %><% ELSE %>''<% END %>
+    },
+    cmOptions: {
+      smartIndent: true,
+      lineNumbers: true,
+      lint: true,
+      indentWithTabs: false,
+      tabSize: 2,
+      indentUnit: 2,
+      autoCloseBrackets: true,
+      autoCloseTags: true,
+      matchTags: {
+        bothTags: true
+      },
+      mode: '<% IF extention %><% extention %><% ELSE %>text/javascript<% END %>',
+      theme: 'blackboard',
+      readOnly: <% IF value %>true<% ELSE %>false<% END %>
+    }
+  },
+  methods: {
+    onSave() {
+      axios.post('/', Qs.stringify({
+        value: this.state.code
+      })).then(result => {
+        this.cmOptions.readOnly = true
+        this.state.name = result.data.name
+        this.setURL()
+      }).catch(error => {
+        this.error = error
+      })
+    },
+    onCreate() {
+      this.state.code = ''
+      this.state.name = ''
+      this.setURL()
+      this.cmOptions.readOnly = false
+
+    },
+    onDupandEdit() {
+      this.state.name = ''
+      this.setURL()
+      this.cmOptions.readOnly = false
+    },
+    getTextOnly() {
+      window.location.href = '/raw/<% name %>'
+    },
+    setURL() {
+      window.history.pushState(null, "Pastey " + this.state.name, "/" + this.state.name);
+    }
+  }
+})
 
 </script>

@@ -6,8 +6,8 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'name' => 'index.tt',
-        'modtime' => '1543816898',
+        'modtime' => '1543815174',
+        'name' => 'raw.tt',
     },
     BLOCK => sub {
     my $context = shift || die "template sub called without context\n";
@@ -16,12 +16,8 @@ Template::Document->new({
     my $_tt_error;
     
     eval { BLOCK: {
-#line 1 "/icyavocado/pastey/views/index.tt"
-$output .=  $context->include('templates/header.tt');
-$output .=  "\n  <codemirror v-model=\"state.code\" :options=\"cmOptions\"></codemirror>\n";
-#line 3 "/icyavocado/pastey/views/index.tt"
-$output .=  $context->include('templates/footer.tt');
-$output .=  "\n\n";
+#line 1 "/icyavocado/pastey/views/raw.tt"
+$output .=  $stash->get('value');
     } };
     if ($@) {
         $_tt_error = $context->catch($@, \$output);
