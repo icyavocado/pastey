@@ -6,7 +6,7 @@ use utf8;
 
 Template::Document->new({
     METADATA => {
-        'modtime' => '1543818944',
+        'modtime' => '1543819903',
         'name' => 'templates/footer.tt',
     },
     BLOCK => sub {
@@ -23,28 +23,38 @@ $stash->set('JSON',
 $output .=  "\n<script src=\"https://unpkg.com/axios/dist/axios.min.js\"></script>\n<script src=\"https://cdn.jsdelivr.net/npm/vue\"></script>\n<script src=\"";
 #line 4 "/icyavocado/pastey/views/templates/footer.tt"
 $output .=  $stash->get(['request', 0, 'uri_base', 0]);
-$output .=  "/javascripts/vue-codemirror.js\"></script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js\"></script>\n<script>\naddEventListener('load', function() {\n  var code = document.querySelector('#code');\n  var worker = new Worker('/javascripts/worker.js');\n  worker.onmessage = function(event) { code.innerHTML = event.data; }\n  worker.postMessage(code.textContent);\n})\n\nVue.use(window.VueCodemirror)\n\nnew Vue({\n  el: '#app',\n  data: {\n    error: '',\n    state: {\n      name: '',\n      code: ";
-#line 22 "/icyavocado/pastey/views/templates/footer.tt"
+$output .=  "/javascripts/vue-codemirror.js\"></script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js\"></script>\n<script src=\"https://codemirror.net/mode/javascript/javascript.js\"></script>\n<script src=\"https://codemirror.net/mode/java/java.js\"></script>\n<script>\n\nVue.use(window.VueCodemirror)\n\nnew Vue({\n  el: '#app',\n  data: {\n    error: '',\n    state: {\n      name: '',\n      code: ";
+#line 18 "/icyavocado/pastey/views/templates/footer.tt"
 if ($stash->get('value')) {
-#line 22 "/icyavocado/pastey/views/templates/footer.tt"
+#line 18 "/icyavocado/pastey/views/templates/footer.tt"
 $output .=  $stash->get(['value', 0, 'json', 0]);
 }
 else {
 $output .=  "''";
 }
 
-$output .=  ",\n    },\n    cmOptions: {\n      tabSize: 2,\n      mode: '";
-#line 26 "/icyavocado/pastey/views/templates/footer.tt"
+$output .=  ",\n      mode: ";
+#line 19 "/icyavocado/pastey/views/templates/footer.tt"
+if ($stash->get('mode')) {
+#line 19 "/icyavocado/pastey/views/templates/footer.tt"
+$output .=  $stash->get(['mode', 0, 'json', 0]);
+}
+else {
+$output .=  "''";
+}
+
+$output .=  "\n    },\n    cmOptions: {\n      smartIndent: true,\n      lineNumbers: true,\n      lint: true,\n      indentWithTabs: false,\n      tabSize: 2,\n      indentUnit: 2,\n      autoCloseBrackets: true,\n      autoCloseTags: true,\n      matchTags: {\n        bothTags: true\n      },\n      mode: '";
+#line 33 "/icyavocado/pastey/views/templates/footer.tt"
 if ($stash->get('extention')) {
-#line 26 "/icyavocado/pastey/views/templates/footer.tt"
+#line 33 "/icyavocado/pastey/views/templates/footer.tt"
 $output .=  $stash->get('extention');
 }
 else {
 $output .=  "text/javascript";
 }
 
-$output .=  "',\n      theme: 'blackboard',\n      lineNumbers: true,\n      line: true,\n      readOnly: ";
-#line 30 "/icyavocado/pastey/views/templates/footer.tt"
+$output .=  "',\n      theme: 'blackboard',\n      readOnly: ";
+#line 35 "/icyavocado/pastey/views/templates/footer.tt"
 if ($stash->get('value')) {
 $output .=  "true";
 }
@@ -53,7 +63,7 @@ $output .=  "false";
 }
 
 $output .=  "\n    }\n  },\n  methods: {\n    onSave() {\n      axios.post('/', Qs.stringify({\n        value: this.state.code\n      })).then(result => {\n        this.cmOptions.readOnly = true\n        this.state.name = result.data.name\n        this.setURL()\n      }).catch(error => {\n        this.error = error\n      })\n    },\n    onCreate() {\n      this.state.code = ''\n      this.state.name = ''\n      this.setURL()\n      this.cmOptions.readOnly = false\n\n    },\n    onDupandEdit() {\n      this.state.name = ''\n      this.setURL()\n      this.cmOptions.readOnly = false\n    },\n    getTextOnly() {\n      window.location.href = '/raw/";
-#line 58 "/icyavocado/pastey/views/templates/footer.tt"
+#line 63 "/icyavocado/pastey/views/templates/footer.tt"
 $output .=  $stash->get('name');
 $output .=  "'\n    },\n    setURL() {\n      window.history.pushState(null, \"Pastey \" + this.state.name, \"/\" + this.state.name);\n    }\n  }\n})\n\n</script>";
     } };

@@ -1,5 +1,5 @@
 <header>
-  <h1 style="color: white">[ 🐈 Pastey ]</h1>
+  <h1 style="color: white"><a href="/about">[ 🐈 Pastey ]</a></h1>
   <div><a @click="onSave">[ Save ]</a></div>
   <div><a @click="onCreate">[ New ]</a></div>
   <div><a @click="onDupandEdit">[ Duplicate & Edit ]</a></div>
