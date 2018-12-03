@@ -1,0 +1,11 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+var myCodeMirror = CodeMirror(document.getElementById('app'), {
+  tabSize: 2,
+  lineNumbers: true,
+  theme: 'blackboard',
+  mode: <% IF extention %>'<% extention %>'<% ELSE %>'javascript'<% END %>
+});
+
+</script>
