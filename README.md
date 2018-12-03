@@ -35,7 +35,7 @@ cpanm DBIx::Class::Schema::Loader
 cpanm Template::Plugin::JSON
 cpanm Sanitize
 ```
-##### START UP
+# START UP
 In the root folder of the app:
 ```bash
 # pwd should be path/to/pastey/
