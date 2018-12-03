@@ -35,3 +35,9 @@ cpanm DBIx::Class::Schema::Loader
 cpanm Template::Plugin::JSON
 cpanm Sanitize
 ```
+##### START UP
+In the root folder of the app:
+```bash
+# pwd should be path/to/pastey/
+plackup -p 5000 bin/app.psgi
+```
