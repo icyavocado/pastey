@@ -1,17 +1,16 @@
 package pastey;
-use lib qw(~/perl5/lib/perl5/ ~/perl5/ ~/perl5/perlbrew/perls/perl-5.26.1 /home/avocado/perl5/perlbrew/perls/perl-5.26.1/lib/5.26.1);
+use lib qw(~/perl5/lib/perl5/ ~/perl5/ ~/perl5/perlbrew/perls/perl-5.26.1 ~/perl5/perlbrew/perls/perl-5.26.1/lib/5.26.1 ~/perl5/perlbew/perls/perl-5.24.1 ~/perl5/perlbew/perls/perl-5.24.1/perl/5.24.1);
 use Dancer2;
 use Pastey::Schema;
 use Data::UUID;
 use Digest::SHA qw(sha1);
 use Dancer2::Serializer::JSON;
-use Sanitize;
 our $VERSION = '0.1';
 
 hook before => sub {
   if ( !session('schema') ) {
     my $schema
-      = Pastey::Schema->connect("dbi:SQLite:dbname=../dbfile/pastey_bin.sqlite");
+      = Pastey::Schema->connect("dbi:SQLite:dbname=dbfile/pastey_bin.sqlite");
     session( 'PasteyBin', $schema->resultset('PasteyBin') );
   }
 };
@@ -21,7 +20,7 @@ get '/' => sub {
 };
 
 post '/' => sub {
-  my $value = sanitize( body_parameters->get('value'), html => 1 );
+  my $value = body_parameters->get('value');
   if ($value) {
     my $ug  = Data::UUID->new;
     my $sha = Digest::SHA->new();
@@ -44,18 +43,18 @@ post '/' => sub {
   }
 };
 
-get '/:nameandext' => sub {
-  pass if route_parameters->get('nameandext') =~ /A-Za-z0-9.$/;
-  my @nameandext = split( /\./, route_parameters->get('nameandext') );
-  my $name       = $nameandext[0];
-  my $ext        = $nameandext[1];
+get '/:nameandformat' => sub {
+  pass if route_parameters->get('nameandformat') =~ /A-Za-z0-9.$/;
+  my @nameandformat = split( /\./, route_parameters->get('nameandformat') );
+  my $name       = $nameandformat[0];
+  my $format        = $nameandformat[1];
   my $result     = session('PasteyBin')->find( { name => $name } );
   if ($result) {
     template 'index' => {
-      'title'   => '🐈 Pastey',
+      title   => '🐈 Pastey',
       name      => $result->name,
       value     => $result->value,
-      extention => $ext
+      format => $format
     };
   }
   else {
@@ -64,18 +63,18 @@ get '/:nameandext' => sub {
 
 };
 
-get 'raw/:nameandext' => sub {
-  pass if route_parameters->get('nameandext') =~ /A-Za-z0-9.$/;
-  my @nameandext = split( /\./, route_parameters->get('nameandext') );
-  my $name       = $nameandext[0];
-  my $ext        = $nameandext[1];
+get 'raw/:nameandformat' => sub {
+  pass if route_parameters->get('nameandformat') =~ /A-Za-z0-9.$/;
+  my @nameandformat = split( /\./, route_parameters->get('nameandformat') );
+  my $name       = $nameandformat[0];
+  my $format        = $nameandformat[1];
   my $result     = session('PasteyBin')->find( { name => $name } );
   if ($result) {
     template 'raw' => {
       title     => '🐈 Pastey',
       name      => $result->name,
       value     => $result->value,
-      extention => $ext
+      format => $format
     };
   }
   else {
@@ -86,10 +85,10 @@ get 'raw/:nameandext' => sub {
   }
 };
 
-get 'ajax/:nameandext' => sub {
-  pass if route_parameters->get('nameandext') =~ /A-Za-z0-9.$/;
-  my @nameandext = split( /\./, route_parameters->get('nameandext') );
-  my $name       = $nameandext[0];
+get 'ajax/:nameandformat' => sub {
+  pass if route_parameters->get('nameandformat') =~ /A-Za-z0-9.$/;
+  my @nameandformat = split( /\./, route_parameters->get('nameandformat') );
+  my $name       = $nameandformat[0];
   my $result     = session('PasteyBin')->find( { name => $name } );
   if ($result) {
     return to_json(
@@ -105,11 +104,11 @@ get 'ajax/:nameandext' => sub {
 
 };
 
-post '/:nameandext' => sub {
-  pass if route_parameters->get('nameandext') =~ /A-Za-z0-9.$/;
-  my @nameandext = split( /\./, route_parameters->get('nameandext') );
-  my $name       = $nameandext[0];
-  my $value      = sanitize( body_parameters->get('value'), html => 1 );
+post '/:nameandformat' => sub {
+  pass if route_parameters->get('nameandformat') =~ /A-Za-z0-9.$/;
+  my @nameandformat = split( /\./, route_parameters->get('nameandformat') );
+  my $name       = $nameandformat[0];
+  my $value      = body_parameters->get('value');
   if ($value) {
     my $result = session('PasteyBin')->find( { name => $name } );
     if ( $result->{value} ) {

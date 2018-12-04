@@ -7,7 +7,9 @@ header {
   z-index: 999;
   cursor: pointer;
 }
-body, html {
+
+body,
+html {
   font-family: 'Fira Code';
   min-width: 100vw;
   width: 100%;
@@ -15,6 +17,28 @@ body, html {
   padding: 0;
   margin: 0;
 }
+
+button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: rgb(61, 61, 187)
+}
+
+button:hover {
+  background: black;
+  color: white;
+  text-decoration: underline
+}
+
+button:disabled {
+  color: grey
+}
+
+.logo {
+  text-decoration: none;
+}
+
 .CodeMirror {
   font-family: 'Fira Code';
   min-width: 100vw;

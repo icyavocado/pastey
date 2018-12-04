@@ -1,9 +1,9 @@
 <% USE JSON %>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="/javascripts/vue-codemirror.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-<script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+<script src="/javascripts/vue-codemirror.js"></script>
+<script src="mode/javascript/javascript.js"></script>
 <script>
 
 Vue.use(window.VueCodemirror)
@@ -13,9 +13,8 @@ new Vue({
   data: {
     error: '',
     state: {
-      name: '',
-      code: <% IF value %><% value.json %><% ELSE %>''<% END %>,
-      mode: <% IF mode %><% mode.json %><% ELSE %>''<% END %>
+      name: <% IF name %><% name.json %><% ELSE %>''<% END %>,
+      value: <% IF value %><% value.json %><% ELSE %>''<% END %>
     },
     cmOptions: {
       smartIndent: true,
@@ -29,7 +28,7 @@ new Vue({
       matchTags: {
         bothTags: true
       },
-      mode: '<% IF extention %><% extention %><% ELSE %>text/javascript<% END %>',
+      mode: <% IF format %>'text/<% format %>'<% ELSE %>'text/html'<% END %>,
       theme: 'blackboard',
       readOnly: <% IF value %>true<% ELSE %>false<% END %>
     }
@@ -37,7 +36,7 @@ new Vue({
   methods: {
     onSave() {
       axios.post('/', Qs.stringify({
-        value: this.state.code
+        value: this.state.value
       })).then(result => {
         this.cmOptions.readOnly = true
         this.state.name = result.data.name
@@ -47,7 +46,7 @@ new Vue({
       })
     },
     onCreate() {
-      this.state.code = ''
+      this.state.value = ''
       this.state.name = ''
       this.setURL()
       this.cmOptions.readOnly = false
@@ -59,10 +58,36 @@ new Vue({
       this.cmOptions.readOnly = false
     },
     getTextOnly() {
-      window.location.href = '/raw/<% name %>'
+      window.location.href = '/raw/' + this.state.name
     },
     setURL() {
       window.history.pushState(null, "Pastey " + this.state.name, "/" + this.state.name);
+    }
+  },
+  computed: {
+    disableSave: {
+      get() {
+        if (!this.state.name) return false
+        return true
+      }
+    },
+    disableNew: {
+      get() {
+        if (this.state.name && this.state.value) return false
+        return true
+      }
+    },
+    disableDup: {
+      get() {
+        if (!this.state.value || !this.state.name) return true
+        return false
+      }
+    },
+    disableRaw: {
+      get() {
+        if (!this.state.name) return true
+        return false
+      }
     }
   }
 })
