@@ -13,7 +13,7 @@
   <meta name="twitter:site" content="🐈 Pastey" />
   <meta name="twitter:title" content="Pastey is an open-source pastebin written in Perl/Dancer and VueJS with minimal CSS." />
   <meta name="twitter:description" content="Whether it is for writting your life long love letter or just a non tracable note to your partner in crime. Pastey will always be there for you. Working" />
-  <meta name="twitter:image" content="/images/mirror.png" />
+  <meta name="twitter:image" content="/images/twitter-logo.png" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
