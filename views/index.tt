@@ -1,4 +1,4 @@
 <% INCLUDE 'templates/header.tt' %>
-  <codemirror v-model="state.code" :options="cmOptions"></codemirror>
+  <codemirror v-model="state.value" :options="cmOptions"></codemirror>
 <% INCLUDE 'templates/footer.tt' %>
 
