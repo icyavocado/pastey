@@ -10,7 +10,7 @@ our $VERSION = '0.1';
 hook before => sub {
   if ( !session('schema') ) {
     my $schema
-      = Pastey::Schema->connect("dbi:SQLite:dbname=dbfile/pastey_bin.sqlite");
+      = Pastey::Schema->connect("dbi:SQLite:dbname=../dbfile/pastey_bin.sqlite");
     session( 'PasteyBin', $schema->resultset('PasteyBin') );
   }
 };
