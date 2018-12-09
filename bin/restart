@@ -1,0 +1,113 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Path::Tiny;
+use Data::Dumper;
+use Function::Parameters;
+
+my $path = Path::Tiny->cwd->parent;
+
+my %default_options = (
+  port    => '8080',
+  name    => 'pastey',
+  local   => $path,
+  workers => '5'
+);
+
+my %descriptions = (
+  '--port'    => 'Port that the app will run on. [default 8080]',
+  '--workers' => 'Set workers for starman use. [default 5]',
+  '--local'   => 'Local folder of the app. [default ' . $path . ']',
+  '--name' =>
+    'Use to construct module name and pid file. eg: Pastey => Pastey.pm. [default pastey]'
+);
+
+my %options = parseOption(@ARGV);
+
+# APP PSGI
+my $app_psgi = "$path/bin/app.psgi";
+
+# ERROR LOG DIRECTORY
+my $error_file = "$path/logs/$options{name}-error.log";
+my $error_dir  = "$path/logs/";
+if ( !-e $error_dir || !-d $error_dir ) { mkdir $error_dir; }
+createFile($error_file);
+
+# PID FILE
+my $pid_file = "$path/$options{name}.pid";
+my $pid      = getPid();
+
+# BEGIN RESTARTING
+if ($pid) {
+  kill 9, $pid if $pid =~ /^[0-9,.E]+$/;
+  my $gone_pid = waitpid -1, $pid;
+  if ($gone_pid) {
+    print "[DONE] App at PID $pid successfully stopped.\n";
+  }
+  else {
+    print
+      "[FAIL] Couldn't kill process at PID $pid, you may have to kill it manually\n";
+    my $output = qx/ps -ef | grep starman/;
+    print $output;
+  }
+}
+else {
+  print "Look like there is nothing at $pid_file\n[SKIP] killing process\n";
+}
+
+sleep(2);
+
+# STARTING APP COMMAND
+my $command
+  = sprintf(
+  "plackup -s Starman --pid %s -p %s --workers=%s -a %s --error-log %s -D ",
+  getPid(), $options{port}, $options{workers}, $app_psgi, $error_file );
+
+# RUN COMMAND
+my $output = open( my $ph, "-|", $command ) or die $!;
+
+# SET PID BACK TO THE PROGRAM
+setPid($output);
+
+# STARTING APP
+print "\n[DONE] App successfully started at port :$options{port}\n\n";
+
+fun parseOption(@ARGV) {
+  if ( !@ARGV || scalar @ARGV < 1 ) {
+    showAvailableOptions();
+  }
+  my %user_options = map { $_ =~ s/-//g; $_; } @ARGV;
+  return ( %default_options, %user_options );
+}
+
+fun showAvailableOptions() {
+  printf( "  %-10s  |  %-50s\n", $_, $descriptions{$_} )
+    foreach keys %descriptions;
+  printf "\n\n";
+}
+
+fun getPid() {
+  createFile($pid_file);
+  open( my $fh, '<', $pid_file ) || die "Weird";
+  my @string = <$fh>;
+  close $fh;
+  return shift @string if @string;
+  return undef;
+}
+
+fun setPid($pid_number) {
+  createFile($pid_file);
+  open( my $fh, '>', $pid_file );
+  print $fh $pid_number;
+  close $fh;
+
+  # print "PID number $pid_number written to $pid_file\n";
+}
+
+fun createFile($file) {
+  if ( !-e $file ) {
+    open my $fc, ">", $file;
+    close $fc;
+  }
+}
