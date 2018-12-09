@@ -71,10 +71,10 @@ my $output = open( my $ph, "-|", $command ) or die $!;
 setPid($output);
 
 # STARTING APP
-print "\n[DONE] App successfully started at port :$options{port}\n\n";
+print "[DONE] App successfully started at port :$options{port}\n";
 
 fun parseOption(@ARGV) {
-  if ( !@ARGV || scalar @ARGV < 1 ) {
+  if ( $ARGV[0] && $ARGV[0] eq '--help' ) {
     showAvailableOptions();
   }
   my %user_options = map { $_ =~ s/-//g; $_; } @ARGV;
