@@ -1,3 +1,5 @@
 dbfile/pastey_bin.sqlite
 logs/**
 pastey.pid
+bin/pastey-error.log
+bin/restart.pl
