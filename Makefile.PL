@@ -8,10 +8,10 @@ my $eumm_version = $ExtUtils::MakeMaker::VERSION;
 $eumm_version =~ s/_//;
 
 WriteMakefile(
-    NAME                => 'pastey',
-    AUTHOR              => q{YOUR NAME <youremail@example.com>},
-    VERSION_FROM        => 'lib/pastey.pm',
-    ABSTRACT            => 'YOUR APPLICATION ABSTRACT',
+    NAME                => 'Pastey',
+    AUTHOR              => q{Avocado <avocado@ovacoda.com>},
+    VERSION_FROM        => 'lib/Pastey.pm',
+    ABSTRACT            => 'Pastey',
     ($eumm_version >= 6.3001
       ? ('LICENSE'=> 'perl')
       : ()),
@@ -22,5 +22,5 @@ WriteMakefile(
         'Dancer2'     => 0.205002,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'pastey-*' },
+    clean               => { FILES => 'Pastey-*' },
 );
