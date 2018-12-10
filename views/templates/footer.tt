@@ -58,7 +58,7 @@ new Vue({
       this.cmOptions.readOnly = false
     },
     getTextOnly() {
-      window.location.href = '/raw/' + this.state.name
+      window.location.href = this.state.name + '/raw'
     },
     setURL() {
       window.history.pushState(null, "Pastey " + this.state.name, "/" + this.state.name);
