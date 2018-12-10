@@ -1,0 +1,3 @@
+for module in $(perldoc -u perllocal | grep -F 'C<Module> L<' | sed 's/^.*L<\(.*\)|.*>$/\1/') ; do
+  cpanm --uninstall "$module"; 
+done
