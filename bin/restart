@@ -1,10 +1,12 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
+use lib '../local/lib/perl5';
 use strict;
 use warnings;
 use Path::Tiny;
 use Data::Dumper;
 use Function::Parameters;
+use File::Tail;
 
 my $path = Path::Tiny->cwd->parent;
 
@@ -36,7 +38,8 @@ createFile($error_file);
 
 # PID FILE
 my $pid_file = "$path/$options{name}.pid";
-my $pid      = getPid();
+createFile($pid_file);
+my $pid = getPid();
 
 # BEGIN RESTARTING
 if ($pid) {
@@ -61,7 +64,7 @@ sleep(2);
 # STARTING APP COMMAND
 my $command
   = sprintf(
-  "plackup -s Starman --pid %s -p %s --workers=%s -a %s --error-log %s -D ",
+  "carton exec plackup -s Starman --pid %s -p %s --workers=%s -a %s --error-log %s -D ",
   getPid(), $options{port}, $options{workers}, $app_psgi, $error_file );
 
 # RUN COMMAND
@@ -72,6 +75,11 @@ setPid($output);
 
 # STARTING APP
 print "[DONE] App successfully started at port :$options{port}\n";
+
+my $file = File::Tail->new($error_file);
+while ( defined( my $line = $file->read ) ) {
+  print "$line";
+}
 
 fun parseOption(@ARGV) {
   if ( $ARGV[0] && $ARGV[0] eq '--help' ) {
@@ -88,7 +96,7 @@ fun showAvailableOptions() {
 }
 
 fun getPid() {
-  createFile($pid_file);
+
   open( my $fh, '<', $pid_file ) || die "Weird";
   my @string = <$fh>;
   close $fh;
@@ -97,7 +105,6 @@ fun getPid() {
 }
 
 fun setPid($pid_number) {
-  createFile($pid_file);
   open( my $fh, '>', $pid_file );
   print $fh $pid_number;
   close $fh;
