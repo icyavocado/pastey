@@ -34,52 +34,35 @@ my $app_psgi = "$path/bin/app.psgi";
 my $error_file = "$path/logs/$options{name}-error.log";
 my $error_dir  = "$path/logs/";
 if ( !-e $error_dir || !-d $error_dir ) { mkdir $error_dir; }
-createFile($error_file);
 
 # PID FILE
 my $pid_file = "$path/$options{name}.pid";
-createFile($pid_file);
-my $pid = getPid();
 
-# BEGIN RESTARTING
-if ($pid) {
-  kill 9, $pid if $pid =~ /^[0-9,.E]+$/;
-  my $gone_pid = waitpid -1, $pid;
-  if ($gone_pid) {
-    print "[DONE] App at PID $pid successfully stopped.\n";
-  }
-  else {
-    print
-      "[FAIL] Couldn't kill process at PID $pid, you may have to kill it manually\n";
-    my $output = qx/ps -ef | grep starman/;
-    print $output;
-  }
+if ( -e $pid_file ) {
+  open FILE, '<', $pid_file or die "Can't open '$pid_file': $!";
+  my @pids = <FILE>;
+  kill -9, $pids[0];
 }
-else {
-  print "Look like there is nothing at $pid_file\n[SKIP] killing process\n";
-}
-
-sleep(2);
 
 # STARTING APP COMMAND
 my $command
   = sprintf(
-  "carton exec plackup -s Starman --pid %s -p %s --workers=%s -a %s --error-log %s -D ",
-  getPid(), $options{port}, $options{workers}, $app_psgi, $error_file );
+  "carton exec plackup -s Starman --pid %s -p %s --workers=%s -a %s --error-log %s --daemonize",
+  $pid_file, $options{port}, $options{workers}, $app_psgi, $error_file );
 
 # RUN COMMAND
-my $output = open( my $ph, "-|", $command ) or die $!;
+open my $fc, "| $command";
 
 # SET PID BACK TO THE PROGRAM
-setPid($output);
 
 # STARTING APP
 print "[DONE] App successfully started at port :$options{port}\n";
 
-my $file = File::Tail->new($error_file);
-while ( defined( my $line = $file->read ) ) {
-  print "$line";
-}
+# TAIL THE LOG
+# my $file = File::Tail->new($error_file);
+# while ( defined( my $line = $file->read ) ) {
+#   print "$line";
+# }
 
 fun parseOption(@ARGV) {
   if ( $ARGV[0] && $ARGV[0] eq '--help' ) {
@@ -93,28 +76,4 @@ fun showAvailableOptions() {
   printf( "  %-10s  |  %-50s\n", $_, $descriptions{$_} )
     foreach keys %descriptions;
   printf "\n\n";
-}
-
-fun getPid() {
-
-  open( my $fh, '<', $pid_file ) || die "Weird";
-  my @string = <$fh>;
-  close $fh;
-  return shift @string if @string;
-  return undef;
-}
-
-fun setPid($pid_number) {
-  open( my $fh, '>', $pid_file );
-  print $fh $pid_number;
-  close $fh;
-
-  # print "PID number $pid_number written to $pid_file\n";
-}
-
-fun createFile($file) {
-  if ( !-e $file ) {
-    open my $fc, ">", $file;
-    close $fc;
-  }
 }
