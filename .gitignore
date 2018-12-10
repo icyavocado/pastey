@@ -1,5 +1,4 @@
-dbfile/pastey_bin.sqlite
 logs/**
-pastey.pid
-bin/pastey-error.log
-bin/restart.pl
+local/**
+**.pid
+database/pastey_bin.sqlite
