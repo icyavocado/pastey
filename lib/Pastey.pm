@@ -31,8 +31,10 @@ get qr{ ^/(?<name>\w+)?(\.(?<format>.\w+)?)?/?(?<type>(raw|ajax))? }x => sub {
           template 'raw' => { name => $result->name, value => $result->value };
         }
         elsif ( $type eq 'ajax' ) {
+	  header 'Access-Control-Allow-Origin' => '*';
           header 'Content-Type' => 'application/json';
-          return to_json { name => $result->name, value => $result->value };
+	  my $value = decode_json($result->value);
+          return to_json { name => $result->name, value => $value };
         }
         else {
           status 404;
