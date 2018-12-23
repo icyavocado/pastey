@@ -2,7 +2,7 @@ import axios from "axios";
 import Qs from "qs";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: "/api"
 });
 
 const api = {
