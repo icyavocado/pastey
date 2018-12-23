@@ -5,7 +5,7 @@ use warnings;
 
 use Test::DBIx::Class {
   schema_class  => 'Pastey::Schema',
-  connect_info  => ["dbi:SQLite:dbname=dbfile/pasteybin.sqlite"],
+  connect_info  => ["dbi:SQLite:dbname=database/pasteybin.sqlite"],
   connect_opts  => { name_sep => '.', quote_char => '`', },
   fixture_class => '::Populate',
 };
