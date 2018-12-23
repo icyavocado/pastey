@@ -1,0 +1,47 @@
+body,
+html {
+  font-family: 'Fira Code';
+  min-width: 100vw;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 100px;
+  width: 200px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: white;
+}
+
+.logo {
+  text-decoration: none;
+}
+
+button:hover {
+  background: black;
+  color: white;
+  text-decoration: underline
+}
+
+button:disabled {
+  color: grey
+}
+
+.CodeMirror {
+  font-family: 'Fira Code';
+  min-width: 100vw;
+  width: 100%;
+  min-height: 100vh;
+}

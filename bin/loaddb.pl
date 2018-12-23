@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 
-use lib "../lib";
+use lib "/icyavocado/pastey/lib";
+use lib "/icyavocado/pastey/local/lib/perl5";
+
 use DBIx::Class::Schema::Loader qw/ make_schema_at /;
 use DBIx::Class;
 use Pastey::Schema;

@@ -2,3 +2,5 @@ logs/**
 local/**
 **.pid
 database/pastey_bin.sqlite
+node_modules
+public

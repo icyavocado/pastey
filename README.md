@@ -1,70 +1,29 @@
-# ABOUT
+# pastey-front
 
-This is an implementation of hastebin in Perl.
-
-# INSTALL
-
-#### Install Dancer 2
-
-```bash
-sudo apt-get install libdancer2-perl
+## Project setup
+```
+npm install
 ```
 
-#### Install SQLite3
-
+### Compiles and hot-reloads for development
 ```
-sudo apt install sqlite3
-```
-
-#### Install CPANM modules
-
-##### Install CPANM support tools
-
-```bash
-sudo apt install cpanminus
-sudo apt install build-essential
-sudo apt install unzip
-perl -mCPAN -e'CPAN::Shell->look("DBIx::Class")'
-cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+npm run serve
 ```
 
-##### Install CPAN modules
-
-```bash
-cpanm WWW::Form::UrlEncoded::XS
-cpanm Data::UUID
-cpanm DBIx::Class
-cpanm DBIx::Class::Schema::Loader
-cpanm Template::Plugin::JSON
-cpanm Sanitize
+### Compiles and minifies for production
+```
+npm run build
 ```
 
-# START UP
-
-In the root folder of the app:
-
-```bash
-# pwd should be path/to/pastey/
-plackup -p 5000 bin/app.psgi
+### Run your tests
+```
+npm run test
 ```
 
-# Perl Brew
-
-```bash
-curl -L https://install.perlbrew.pl | bash
-echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.bashrc
-source ~/.bashrc
-perlbrew init
-perlbrew install -n -j 5 5.26.1
-perlbrew install-cpanm
-perlbrew switch perl-5.26.1
+### Lints and fixes files
+```
+npm run lint
 ```
 
-# Carton
-
-```bash
-perlbrew lib create carton
-perlbrew switch perl-5.26.1@carton
-source ~/perl5/perlbrew/etc/bashrc
-cpanm Carton
-```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

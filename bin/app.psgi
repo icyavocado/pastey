@@ -2,39 +2,40 @@
 
 use strict;
 use warnings;
-use FindBin;
-use lib "$FindBin::Bin/../lib";
 
+use lib "/icyavocado/pastey/lib";
+use lib "/icyavocado/pastey/local/lib/perl5";
+
+=begin comment
 # use this block if you don't need middleware, and only have a single target Dancer app to run here
 use Pastey;
 
-pastey->to_app;
+Pastey->to_app;
 
-=begin comment
 # use this block if you want to include middleware such as Plack::Middleware::Deflater
+=end comment
+=cut
 
-use pastey;
+use Pastey;
 use Plack::Builder;
 
 builder {
-    enable 'Deflater';
-    pastey->to_app;
+  enable 'Deflater';
+  Pastey->to_app;
 }
-
-=end comment
 
 =cut
 
 =begin comment
 # use this block if you want to mount several applications on different path
 
-use pastey;
+use Pastey;
 use pastey_admin;
 
 use Plack::Builder;
 
 builder {
-    mount '/'      => pastey->to_app;
+    mount '/'      => Pastey->to_app;
     mount '/admin'      => pastey_admin->to_app;
 }
 

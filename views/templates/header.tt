@@ -1,7 +1,0 @@
-<header>
-  <a class="logo" href="/about"><h1 style="color: white">[ 🐈 Pastey ]</h1></a>
-  <div><button :disabled="disableSave" @click="onSave">[ Save ]</button></div>
-  <div><button :disabled="disableNew" @click="onCreate">[ New ]</button></div>
-  <div><button :disabled="disableDup" @click="onDupandEdit">[ Duplicate & Edit ]</button></div>
-  <div><button :disabled="disableRaw" @click="getTextOnly">[ Raw Text ]</button></div>
-</header>

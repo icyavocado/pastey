@@ -1,14 +1,13 @@
 #!/usr/bin/env perl
 
-use lib '../local/lib/perl5';
+use lib "/icyavocado/pastey/local/lib/perl5";
 use strict;
 use warnings;
 use Path::Tiny;
 use Data::Dumper;
 use Function::Parameters;
-use File::Tail;
 
-my $path = Path::Tiny->cwd->parent;
+my $path = "/icyavocado/pastey";
 
 my %default_options = (
   port    => '8080',
