@@ -12,8 +12,9 @@
 import { codemirror } from "vue-codemirror";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/blackboard.css";
-import "../css/main.css";
+import "codemirror/mode/javascript/javascript.js";
 
+import "../css/main.css";
 import ActionBar from "@/components/ActionBar";
 import Logo from "@/components/Logo";
 import { mapMutations, mapState, mapGetters, mapActions } from "vuex";
@@ -25,23 +26,32 @@ export default {
     ActionBar,
     Logo
   },
-  methods: {
-    ...mapMutations(["set"]),
-    ...mapActions(["getData"])
-  },
-  computed: {
-    ...mapState(["name", "value"]),
-    ...mapGetters(["isDupable"]),
-    cmOptions() {
-      return {
-        // codemirror options
+  data() {
+    return {
+      localOp: {
         tabSize: 2,
         mode: "text/javascript",
         theme: "blackboard",
         lineNumbers: true,
         line: true,
         readOnly: this.isDupable
-      };
+      }
+    };
+  },
+  methods: {
+    ...mapMutations(["set"]),
+    ...mapActions(["getData"])
+  },
+  computed: {
+    ...mapState(["name", "value", "format"]),
+    ...mapGetters(["isDupable"]),
+    cmOptions: {
+      get() {
+        return this.localOp;
+      },
+      set(newValue) {
+        this.localOp = newValue;
+      }
     },
     code: {
       get() {
