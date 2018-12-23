@@ -33,8 +33,7 @@ export default {
         mode: "text/javascript",
         theme: "blackboard",
         lineNumbers: true,
-        line: true,
-        readOnly: this.isDupable
+        line: true
       }
     };
   },
@@ -47,7 +46,10 @@ export default {
     ...mapGetters(["isDupable"]),
     cmOptions: {
       get() {
-        return this.localOp;
+        return {
+          ...this.localOp,
+          readOnly: this.isDupable
+        };
       },
       set(newValue) {
         this.localOp = newValue;
