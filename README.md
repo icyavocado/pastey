@@ -52,7 +52,7 @@ Setup Perl / Carton and install dependencies for our backend, this will take a b
 sudo apt install perlbrew
 perlbrew init
 # Add the path to bashrc
-source ~/perl5/perlbrew/etc/bashrc
+echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
 # Install perl version 5.26.1
 perlbrew install -n -j 5 perl-5.26.1
 # Add carton to perlbrew
@@ -81,6 +81,16 @@ Stop the app
 
 ```bash
 kill [pid number from pastey.pid]
+```
+
+## Language Detection
+
+Our system using guesslang to detect the language that user are working with
+
+```bash
+sudo apt install python-pip
+pip3 install guesslang
+echo 'export PATH="$HOME/.local/bin:$PATH"'  >> ~/.bashrc
 ```
 
 #### Resources
