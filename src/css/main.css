@@ -10,9 +10,10 @@ html {
 
 header {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  height: 100px;
+  right: 0;
+  top: 0;
+  background: #0c1120;
+  padding: 10px;
   width: 200px;
   z-index: 999;
   cursor: pointer;
