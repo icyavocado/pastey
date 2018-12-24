@@ -51,11 +51,11 @@ html {
   }
 
   .CodeMirror {
-    min-height: 80vh;
+    min-height: 75vh;
   }
   
   .CodeMirror-scroll {
-    max-height: 80vh;
+    max-height: 75vh;
     grid-row: 2;
   }
 }
