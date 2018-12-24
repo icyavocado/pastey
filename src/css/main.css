@@ -1,20 +1,68 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body,
 html {
-  font-family: 'Fira Code';
+  box-sizing: border-box;
+  font-family: "Fira Code";
   min-width: 100vw;
   width: 100%;
   min-height: 100vh;
   padding: 0;
   margin: 0;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.home {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 1fr 250px;
+  grid-template-rows: 100%;
+  overflow: hidden;
+}
+
+.CodeMirror {
+  font-family: "Fira Code";
+  min-height: 100vh;
+}
+
+.CodeMirror-scroll {
+  max-height: 100vh;
+}
+
+@media (max-width: 600px) {
+  .home {
+    grid-template-columns: 100%;
+    grid-template-rows: 25vh 1fr;
+  }
+
+  header {
+    grid-row: 1;
+    padding: 50px;
+  }
+
+  .CodeMirror {
+    min-height: 75vh;
+  }
+
+  .CodeMirror-scroll {
+    max-height: 75vh;
+    grid-row: 2;
+  }
 }
 
 header {
-  position: absolute;
-  right: 0;
-  top: 0;
   background: #0c1120;
-  padding: 10px;
-  width: 200px;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
   z-index: 999;
   cursor: pointer;
 }
@@ -33,16 +81,25 @@ button {
 button:hover {
   background: black;
   color: white;
-  text-decoration: underline
+  text-decoration: underline;
 }
 
 button:disabled {
-  color: grey
+  color: grey;
 }
 
-.CodeMirror {
-  font-family: 'Fira Code';
-  min-width: 100vw;
-  width: 100%;
-  min-height: 100vh;
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  height: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

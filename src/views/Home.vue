@@ -36,6 +36,7 @@ export default {
         tabSize: 2,
         theme: "blackboard",
         lineNumbers: true,
+        lineWrapping: true,
         line: true
       }
     };
