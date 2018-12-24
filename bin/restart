@@ -9,7 +9,7 @@ my $dancer_config;
 BEGIN {
   my $contents = do { local ( @ARGV, $/ ) = 'config.json'; <> };
   use JSON;
-  $dancer_config = decode_json $contents;
+  $dancer_config = decode_json($contents);
 }
 
 use lib "$dancer_config->{path}/lib $dancer_config->{path}/local/lib/perl5";
@@ -44,7 +44,7 @@ my $error_dir  = "$path/logs/";
 if ( !-e $error_dir || !-d $error_dir ) { mkdir $error_dir; }
 
 # PID FILE
-my $pid_file = "$path/$options{name}.pid";
+my $pid_file = "$path/$options{error_name}.pid";
 
 if ( -e $pid_file ) {
   open FILE, '<', $pid_file or die "Can't open '$pid_file': $!";
