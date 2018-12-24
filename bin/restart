@@ -2,18 +2,18 @@
 
 use strict;
 use warnings;
-use lib "/icyavocado/pastey/local/lib/perl5";
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use lib "$FindBin::Bin/../local/lib/perl5";
+use Function::Parameters;
+use JSON;
 
 my $dancer_config;
 
 BEGIN {
   my $contents = do { local ( @ARGV, $/ ) = 'config.json'; <> };
-  use JSON;
   $dancer_config = decode_json($contents);
 }
-
-use lib "$dancer_config->{path}/lib $dancer_config->{path}/local/lib/perl5";
-use Function::Parameters;
 
 my $path = $dancer_config->{path};
 
@@ -30,7 +30,7 @@ my %descriptions = (
   '--workers' => 'Set workers for starman use. [default 5]',
   '--local'   => 'Local folder of the app. [default ' . $path . ']',
   '--name' =>
-    'Use to construct module name and pid file. eg: Pastey => Pastey.pm. [default pastey]'
+    'Use to construct module name and pid file. eg: Pastey => Pastey.pm. [default Pastey]'
 );
 
 my %options = parseOption(@ARGV);
