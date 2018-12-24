@@ -25,3 +25,4 @@ requires "File::Tail";
 requires "Plack::Middleware::Deflater";
 requires "Dancer2::Plugin::Ajax";
 requires "Dancer2::Plugin::DBIC";
+requires "JSON";
