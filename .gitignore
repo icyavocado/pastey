@@ -4,3 +4,4 @@ local/**
 database/pastey_bin.sqlite
 node_modules
 public
+vue.config.js
