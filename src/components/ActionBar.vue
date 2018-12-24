@@ -1,11 +1,17 @@
 <template>
   <div>
-    <div><button @click="reset" :disabled="isNew">[ New ]</button></div>
-    <div><button @click="save" :disabled="!isSaveable">[ Save ]</button></div>
+    <div>
+      <button @click="reset" :disabled="isNew">[ New ]</button>
+    </div>
+    <div>
+      <button @click="save" :disabled="!isSaveable">[ Save ]</button>
+    </div>
     <div>
       <button @click="duplicate" :disabled="!isDupable">[ Duplicate ]</button>
     </div>
-    <div><button @click="raw" :disabled="!isDupable">[ Raw Text ]</button></div>
+    <div>
+      <button @click="raw" :disabled="!isDupable">[ Raw Text ]</button>
+    </div>
   </div>
 </template>
 

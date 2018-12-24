@@ -1,13 +1,9 @@
 <template>
   <div class="home">
-    <codemirror
-      ref="codeInstance"
-      :options="cmOptions"
-      v-model="code"
-    ></codemirror>
+    <codemirror ref="codeInstance" :options="cmOptions" v-model="code"></codemirror>
     <header class="control">
-      <logo />
-      <action-bar />
+      <logo/>
+      <action-bar/>
     </header>
   </div>
 </template>
