@@ -5,4 +5,4 @@ database/pastey_bin.sqlite
 node_modules
 public
 vue.config.js
-./config.json
+config.json
