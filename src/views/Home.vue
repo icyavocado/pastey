@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       cdn: "https://cdn.jsdelivr.net/npm/codemirror@5.42.2/mode",
+      localMode: "javascript",
       localOp: {
         tabSize: 2,
         theme: "blackboard",
@@ -44,7 +45,38 @@ export default {
   },
   methods: {
     ...mapMutations(["set"]),
-    ...mapActions(["getData"])
+    ...mapActions(["getData"]),
+    loadMode() {
+      let mode = "";
+
+      if (!mode) {
+        let findModeByExtension = CodeMirror.findModeByExtension(this.format);
+        if (findModeByExtension) mode = findModeByExtension.mode;
+      }
+
+      if (!mode) {
+        let findModeByFileName = CodeMirror.findModeByFileName(
+          `${this.name}.${this.format}`
+        );
+        if (findModeByFileName) mode = findModeByFileName.mode;
+      }
+
+      if (!mode) {
+        let findModeByName = CodeMirror.findModeByName(this.format);
+        if (findModeByName) mode = findModeByName.mode;
+      }
+
+      if (!mode) mode = "javascript";
+
+      this.cmOptions = {
+        ...this.cmOptions,
+        mode
+      };
+
+      let recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute("src", `${this.cdn}/${mode}/${mode}.js`);
+      document.head.appendChild(recaptchaScript);
+    }
   },
   computed: {
     ...mapState(["name", "value", "format"]),
@@ -54,7 +86,7 @@ export default {
         return {
           ...this.localOp,
           readOnly: this.isDupable,
-          mode: this.format ? this.format : "text/javascript"
+          mode: this.localMode
         };
       },
       set(newValue) {
@@ -71,13 +103,7 @@ export default {
     }
   },
   mounted() {
-    if (this.format) {
-      const mode = CodeMirror.findModeByExtension(this.format).mode;
-      console.log(mode);
-      let recaptchaScript = document.createElement("script");
-      recaptchaScript.setAttribute("src", `${this.cdn}/${mode}/${mode}.js`);
-      document.head.appendChild(recaptchaScript);
-    }
+    if (this.format) this.loadMode();
   }
 };
 </script>
