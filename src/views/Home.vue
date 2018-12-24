@@ -9,19 +9,20 @@
 </template>
 
 <script>
+import { mapMutations, mapState, mapGetters, mapActions } from "vuex";
+
 import { codemirror } from "vue-codemirror";
 import CodeMirror from "codemirror";
-window.CodeMirror = CodeMirror;
-import "codemirror/mode/meta.js";
-
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/blackboard.css";
+import "codemirror/mode/meta.js";
 import "codemirror/mode/javascript/javascript.js";
+window.CodeMirror = CodeMirror;
 
 import "../css/main.css";
+
 import ActionBar from "@/components/ActionBar";
 import Logo from "@/components/Logo";
-import { mapMutations, mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Home",
