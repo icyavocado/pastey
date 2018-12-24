@@ -2,16 +2,9 @@
 
 use strict;
 use warnings;
-use JSON;
-
-my $dancer_config;
-
-BEGIN {
-  my $contents = do { local ( @ARGV, $/ ) = 'config.json'; <> };
-  $dancer_config = decode_json $contents;
-}
-use lib "$dancer_config->{path}/lib";
-use lib "$dancer_config->{path}/local/lib/perl5";
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use lib "$FindBin::Bin/../local/lib/perl5";
 
 =begin comment
 # use this block if you don't need middleware, and only have a single target Dancer app to run here
