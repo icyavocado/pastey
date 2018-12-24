@@ -1,8 +1,7 @@
 import axios from "axios";
-import Qs from "qs";
 
 const instance = axios.create({
-  baseURL: "/api"
+  baseURL: "http://localhost:5000/api"
 });
 
 const api = {
@@ -23,7 +22,7 @@ const api = {
       value = payload;
     }
 
-    let result = await instance.post("/", Qs.stringify(value));
+    let result = await instance.post("/", value);
     cb(result);
   }
 };
