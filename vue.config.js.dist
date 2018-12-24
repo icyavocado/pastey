@@ -1,3 +1,5 @@
+const dancerConfig = require("./config.json");
+
 module.exports = {
   outputDir: "public",
 
@@ -8,10 +10,11 @@ module.exports = {
   chainWebpack: config => {
     config.plugin("html").tap(args => {
       args[0].template = "src/assets/template/index.html";
+      args[0].title = dancerConfig.app_name;
       return args;
     });
     config.plugin("copy").tap(args => {
-      args[0][0].from = "/icyavocado/pastey/public-vue";
+      args[0][0].from = dancerConfig.path + "/public-vue";
       return args;
     });
   },

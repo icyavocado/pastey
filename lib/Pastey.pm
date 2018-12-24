@@ -1,19 +1,17 @@
 package Pastey;
-use lib "../local";
+
 use Dancer2;
 use Pastey::Schema;
 use Data::UUID;
 use Digest::SHA qw(sha1);
 use Dancer2::Serializer::JSON;
-use Dancer2::Plugin::Ajax;
+use Dancer2::Plugin::DBIC;
 use Function::Parameters;
 our $VERSION = '0.1';
 
 hook before => sub {
-  my $schema = Pastey::Schema->connect(
-    "dbi:SQLite:dbname=/icyavocado/pastey/database/pastey_bin.sqlite");
-  var rs       => $schema->resultset('PasteyBin');
-  var app_name => '🐈 Pastey';
+  var rs       => schema->resultset('PasteyBin');
+  var app_name => config->{'app_name'};
 };
 
 get qr{^/(?<name>(api|ajax)/)?}x => sub {

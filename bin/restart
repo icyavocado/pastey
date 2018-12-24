@@ -1,19 +1,28 @@
 #!/usr/bin/env perl
 
-use lib "/icyavocado/pastey/local/lib/perl5";
 use strict;
 use warnings;
-use Path::Tiny;
-use Data::Dumper;
+use lib "/icyavocado/pastey/local/lib/perl5";
+
+my $dancer_config;
+
+BEGIN {
+  my $contents = do { local ( @ARGV, $/ ) = 'config.json'; <> };
+  use JSON;
+  $dancer_config = decode_json $contents;
+}
+
+use lib "$dancer_config->{path}/lib $dancer_config->{path}/local/lib/perl5";
 use Function::Parameters;
 
-my $path = "/icyavocado/pastey";
+my $path = $dancer_config->{path};
 
 my %default_options = (
-  port    => '8080',
-  name    => 'pastey',
-  local   => $path,
-  workers => '5'
+  port       => $dancer_config->{port},
+  name       => $dancer_config->{app_name},
+  error_name => $dancer_config->{error_name},
+  local      => $path,
+  workers    => $dancer_config->{workers},
 );
 
 my %descriptions = (
@@ -30,7 +39,7 @@ my %options = parseOption(@ARGV);
 my $app_psgi = "$path/bin/app.psgi";
 
 # ERROR LOG DIRECTORY
-my $error_file = "$path/logs/$options{name}-error.log";
+my $error_file = "$path/logs/$options{error_name}-error.log";
 my $error_dir  = "$path/logs/";
 if ( !-e $error_dir || !-d $error_dir ) { mkdir $error_dir; }
 

@@ -1,7 +1,17 @@
 #!/usr/bin/env perl
 
-use lib "/icyavocado/pastey/lib";
-use lib "/icyavocado/pastey/local/lib/perl5";
+use strict;
+use warnings;
+use JSON;
+
+my $dancer_config;
+
+BEGIN {
+  my $contents = do { local ( @ARGV, $/ ) = 'config.json'; <> };
+  $dancer_config = decode_json $contents;
+}
+use lib "$dancer_config->{path}/lib";
+use lib "$dancer_config->{path}/local/lib/perl5";
 
 use DBIx::Class::Schema::Loader qw/ make_schema_at /;
 use DBIx::Class;
@@ -9,7 +19,7 @@ use Pastey::Schema;
 use Function::Parameters;
 use Data::Dumper;
 
-my $path     = '/icyavocado/pastey';
+my $path     = $dancer_config->{path};
 my $sql_path = "$path/bin/scripts/schema.sql";
 
 my $path_to_dbfile = "$path/database/pastey_bin.sqlite";

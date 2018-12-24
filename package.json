@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "codemirror": "^5.42.2",
+    "date-format": "^2.0.0",
     "path-to-regexp": "^2.4.0",
     "qs": "^6.6.0",
     "vue": "^2.5.17",
