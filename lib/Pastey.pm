@@ -10,8 +10,11 @@ use Function::Parameters;
 our $VERSION = '0.1';
 
 hook before => sub {
-  var rs       => schema->resultset('PasteyBin');
-  var app_name => config->{'app_name'};
+  var rs                                => schema->resultset('PasteyBin');
+  var app_name                          => config->{'app_name'};
+  header 'Access-Control-Allow-Headers' => 'content-type';
+  header 'Access-Control-Allow-Origin'  => '*';
+  header 'Content-Type'                 => 'application/json';
 };
 
 get qr{^/(?<name>(api|ajax)/)?}x => sub {
@@ -20,23 +23,18 @@ get qr{^/(?<name>(api|ajax)/)?}x => sub {
 };
 
 get '/ajax/:name' => sub {
-  header 'Access-Control-Allow-Origin' => '*';
-  header 'Content-Type'                => 'application/json';
   my $result = getData( route_parameters->get('name') );
-  return to_json { value => $result->value };
+  return { value => $result->value };
 };
 
 get qr{ ^/api/(?<type>(raw|ajax)/)?(?<name>\w+)?(\.(?<format>.\w+)?)?/? }x =>
   sub {
-  my $name   = captures->{name};
-  my $format = captures->{format};
-  my $type   = captures->{type};
+  my $name = captures->{name};
   pass if !$name;
   my $result = getData($name);
   if ($result) {
-    header 'Content-Type' => 'application/json';
     my $app_name = var 'app_name';
-    return to_json {
+    return {
       name  => $result->name,
       value => $result->value
     };
@@ -44,13 +42,11 @@ get qr{ ^/api/(?<type>(raw|ajax)/)?(?<name>\w+)?(\.(?<format>.\w+)?)?/? }x =>
   redirect '/';
   };
 
-post '/api/' => sub {
+any [ 'post', 'options' ] => '/api/' => sub {
   my $value = body_parameters->get('value');
   if ($value) {
     my $result = addData($value);
-    header 'Access-Control-Allow-Origin' => '*';
-    header 'Content-Type'                => 'application/json';
-    return to_json {
+    return {
       name   => $result->name,
       value  => $result->value,
       format => guess( $result->value )
@@ -78,9 +74,13 @@ fun addData($value) {
 }
 
 fun guess($text) {
-  my @foo    = `echo '$text' | guesslang`;
-  my @result = $foo[ scalar @foo - 1 ] =~ /in \s*(\w+)/g;
-  return lc $result[0];
+  my @foo = `echo '$text' | guesslang`;
+  my @result
+    = ( @foo && $foo[ scalar @foo - 1 ] )
+    ? $foo[ scalar @foo - 1 ] =~ /in \s*(\w+)/g
+    : undef;
+  return lc $result[0] if ( @result && $result[0] );
+  return undef;
 }
 
 dance;
