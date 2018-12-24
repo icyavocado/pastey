@@ -47,7 +47,9 @@ export default new Vuex.Store({
             });
           });
           router.push({
-            path: `/${result.data.name}.${result.data.format}`
+            path: result.data.format
+              ? `/${result.data.name}.${result.data.format}`
+              : `/${result.data.name}`
           });
         }
       );
