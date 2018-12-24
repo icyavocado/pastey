@@ -11,6 +11,7 @@ module.exports = {
     config.plugin("html").tap(args => {
       args[0].template = "src/assets/template/index.html";
       args[0].title = dancerConfig.app_name;
+      args[0].baseUrl = dancerConfig.base_url;
       return args;
     });
     config.plugin("copy").tap(args => {
