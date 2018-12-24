@@ -11,7 +11,19 @@ const api = {
     cb(result);
   },
   async post(payload, cb) {
-    let result = await instance.post("/", Qs.stringify(payload));
+    let value = "";
+    if (typeof payload === "string") {
+      value = payload
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    } else {
+      value = payload;
+    }
+
+    let result = await instance.post("/", Qs.stringify(value));
     cb(result);
   }
 };

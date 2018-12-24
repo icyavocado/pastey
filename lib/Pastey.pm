@@ -52,7 +52,11 @@ post '/api/' => sub {
     my $result = addData($value);
     header 'Access-Control-Allow-Origin' => '*';
     header 'Content-Type'                => 'application/json';
-    return to_json { name => $result->name, value => $result->value };
+    return to_json {
+      name   => $result->name,
+      value  => $result->value,
+      format => guess( $result->value )
+    };
   }
 };
 
@@ -73,6 +77,12 @@ fun addData($value) {
   my $result = $pastey_bin->new( { name => $name, value => $value } );
   $result->insert();
   return $result;
+}
+
+fun guess($text) {
+  my @foo    = `echo '$text' | guesslang`;
+  my @result = $foo[ scalar @foo - 1 ] =~ /in \s*(\w+)/g;
+  return lc $result[0];
 }
 
 dance;

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <codemirror :options="cmOptions" v-model="code"></codemirror>
+    <codemirror ref="codeInstance" :options="cmOptions" v-model="code"></codemirror>
     <header class="control">
       <logo/>
       <action-bar/>
@@ -10,6 +10,9 @@
 
 <script>
 import { codemirror } from "vue-codemirror";
+import CodeMirror from "codemirror";
+window.CodeMirror = CodeMirror;
+
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/blackboard.css";
 import "codemirror/mode/javascript/javascript.js";
@@ -28,9 +31,9 @@ export default {
   },
   data() {
     return {
+      cdn: "https://cdn.jsdelivr.net/npm/codemirror@5.42.2/mode",
       localOp: {
         tabSize: 2,
-        mode: "text/javascript",
         theme: "blackboard",
         lineNumbers: true,
         line: true
@@ -48,7 +51,8 @@ export default {
       get() {
         return {
           ...this.localOp,
-          readOnly: this.isDupable
+          readOnly: this.isDupable,
+          mode: this.format ? this.format : "text/javascript"
         };
       },
       set(newValue) {
@@ -63,6 +67,15 @@ export default {
         this.set({ name: "value", value: newValue });
       }
     }
+  },
+  created() {
+    const CodeMirror = CodeMirror;
+    let recaptchaScript = document.createElement("script");
+    recaptchaScript.setAttribute(
+      "src",
+      `${this.cdn}/${this.format}/${this.format}.js`
+    );
+    document.head.appendChild(recaptchaScript);
   }
 };
 </script>

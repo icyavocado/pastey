@@ -45,7 +45,9 @@ export default new Vuex.Store({
               name: key,
               value: result.data[key]
             });
-            router.push("/" + result.data.name);
+          });
+          router.push({
+            path: `/${result.data.name}.${result.data.format}`
           });
         }
       );
