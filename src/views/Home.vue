@@ -12,6 +12,7 @@
 import { codemirror } from "vue-codemirror";
 import CodeMirror from "codemirror";
 window.CodeMirror = CodeMirror;
+import "codemirror/mode/meta.js";
 
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/blackboard.css";
@@ -69,14 +70,14 @@ export default {
       }
     }
   },
-  created() {
-    const CodeMirror = CodeMirror;
-    let recaptchaScript = document.createElement("script");
-    recaptchaScript.setAttribute(
-      "src",
-      `${this.cdn}/${this.format}/${this.format}.js`
-    );
-    document.head.appendChild(recaptchaScript);
+  mounted() {
+    if (this.format) {
+      const mode = CodeMirror.findModeByExtension(this.format).mode;
+      console.log(mode);
+      let recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute("src", `${this.cdn}/${mode}/${mode}.js`);
+      document.head.appendChild(recaptchaScript);
+    }
   }
 };
 </script>
