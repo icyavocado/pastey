@@ -2,12 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import api from "./api/PasteyAPI";
+const dancer_config = require("../config.json");
+
 import router from "./router";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    ...dancer_config,
     value: "",
     name: "",
     format: "",

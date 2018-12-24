@@ -1,5 +1,15 @@
 <template>
   <a href="/about.markdown" class="logo">
-    <h2>[ 🐈 Pastey ]</h2>
+    <h2>[ {{ app_name }} ]</h2>
   </a>
 </template>
+
+<script>
+import { mapState } from "vuex";
+
+export default {
+  computed: {
+    ...mapState(["app_name"])
+  }
+};
+</script>
