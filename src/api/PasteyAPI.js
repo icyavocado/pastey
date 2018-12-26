@@ -1,7 +1,8 @@
 import axios from "axios";
+const dancer_config = require("../../config.json");
 
 const instance = axios.create({
-  baseURL: "/api"
+  baseURL: `${dancer_config.base_url}/api`
 });
 
 const api = {
