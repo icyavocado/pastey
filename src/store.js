@@ -32,12 +32,15 @@ export default new Vuex.Store({
         });
       });
     },
-    reset({ commit }) {
+    reset({ commit, getters }) {
+      if (getters.isNew) throw Error("Couldn't reset since isNew is true");
       commit("set", { name: "name", value: "" });
       commit("set", { name: "value", value: "" });
       router.push("/");
     },
-    save({ state, commit }) {
+    save({ state, commit, getters }) {
+      if (!getters.isSaveable)
+        throw Error("Couldn't save since isSaveable is false");
       api.post(
         {
           value: state.value
@@ -57,11 +60,15 @@ export default new Vuex.Store({
         }
       );
     },
-    duplicate({ commit }) {
+    duplicate({ commit, getters }) {
+      if (!getters.isDupable)
+        throw Error("Couldn't duplicate since isDupable is false");
       commit("set", { name: "name", value: "" });
       router.push("/");
     },
-    raw({ state }) {
+    raw({ state, getters }) {
+      if (!getters.isDupable)
+        throw Error("Couldn't get raw value since there is no value");
       router.push({
         path: "/raw/" + state.name
       });
