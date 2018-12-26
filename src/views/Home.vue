@@ -1,5 +1,11 @@
 <template>
   <div class="home">
+    <global-events
+      @keydown.ctrl.alt.78.prevent="reset"
+      @keydown.ctrl.83.prevent="save"
+      @keydown.ctrl.68.prevent="duplicate"
+      @keydown.ctrl.82.prevent="raw"
+    />
     <codemirror ref="codeInstance" :options="cmOptions" v-model="code"></codemirror>
     <header class="control">
       <logo/>
@@ -19,6 +25,8 @@ import "codemirror/mode/meta.js";
 import "codemirror/mode/javascript/javascript.js";
 window.CodeMirror = CodeMirror;
 
+import GlobalEvents from "vue-global-events";
+
 import "../css/main.css";
 
 import ActionBar from "@/components/ActionBar";
@@ -29,7 +37,8 @@ export default {
   components: {
     codemirror,
     ActionBar,
-    Logo
+    Logo,
+    GlobalEvents
   },
   data() {
     return {
@@ -46,7 +55,7 @@ export default {
   },
   methods: {
     ...mapMutations(["set"]),
-    ...mapActions(["getData"]),
+    ...mapActions(["getData", "reset", "save", "duplicate", "raw"]),
     loadMode() {
       let mode = "";
 
