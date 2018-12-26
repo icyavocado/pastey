@@ -1,5 +1,5 @@
 <template>
-  <a href="/about.markdown" class="logo">
+  <a href="/about.md" class="logo">
     <h2>[ {{ app_name }} ]</h2>
   </a>
 </template>
