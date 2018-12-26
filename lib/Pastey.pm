@@ -9,6 +9,8 @@ use Dancer2::Plugin::DBIC;
 use Function::Parameters;
 our $VERSION = '0.1';
 
+set engines => { serializer => { JSON => { allow_nonref => 1 }, } };
+
 hook before => sub {
   var rs                                => schema->resultset('PasteyBin');
   var app_name                          => config->{'app_name'};
