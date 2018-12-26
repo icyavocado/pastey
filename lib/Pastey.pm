@@ -24,9 +24,14 @@ get qr{^/(?<name>(api|ajax)/)?}x => sub {
   send_file('index.html');
 };
 
-get '/ajax/:name' => sub {
-  my $result = getData( route_parameters->get('name') );
-  return { value => $result->value };
+get qr{ ^/ajax/(?<name>\w+)?(\.(?<format>.\w+)?)? }x => sub {
+  my $result = getData( captures->{name} );
+  return {
+    name  => $result->name,
+    value => $result->value
+  } if $result;
+  status 404;
+  return { message => "Couldn't find matching result" };
 };
 
 get qr{ ^/api/(?<type>(raw|ajax)/)?(?<name>\w+)?(\.(?<format>.\w+)?)?/? }x =>
