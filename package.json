@@ -56,7 +56,8 @@
     "not ie <= 8"
   ],
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "post-merge": "npm install && npm run build && ./bin/loaddb && ./bin/restart"
   },
   "lint-staged": {
     "*.js": [
