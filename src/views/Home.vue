@@ -6,7 +6,7 @@
       @keydown.ctrl.68.prevent="duplicate"
       @keydown.ctrl.82.prevent="raw"
     />
-    <codemirror ref="codeInstance" :options="cmOptions" v-model="code"></codemirror>
+    <monaco-editor class="editor" v-model="code" :options="options"></monaco-editor>
     <header class="control">
       <logo/>
       <action-bar/>
@@ -17,14 +17,7 @@
 <script>
 import { mapMutations, mapState, mapGetters, mapActions } from "vuex";
 
-import { codemirror } from "vue-codemirror";
-import CodeMirror from "codemirror";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/blackboard.css";
-import "codemirror/mode/meta.js";
-import "codemirror/mode/javascript/javascript.js";
-window.CodeMirror = CodeMirror;
-
+import MonacoEditor from "vue-monaco";
 import GlobalEvents from "vue-global-events";
 
 import "../css/main.css";
@@ -35,68 +28,33 @@ import Logo from "@/components/Logo";
 export default {
   name: "Home",
   components: {
-    codemirror,
+    MonacoEditor,
     ActionBar,
     Logo,
     GlobalEvents
   },
   data() {
-    return {
-      cdn: "https://cdn.jsdelivr.net/npm/codemirror@5.42.2/mode",
-      localMode: "javascript",
-      localOp: {
-        tabSize: 2,
-        theme: "blackboard",
-        lineNumbers: true,
-        lineWrapping: true,
-        line: true
-      }
-    };
+    return {};
   },
   methods: {
     ...mapMutations(["set"]),
-    ...mapActions(["getData", "reset", "save", "duplicate", "raw"]),
-    loadMode() {
-      let mode = "";
-
-      if (!mode) {
-        let findModeByExtension = CodeMirror.findModeByExtension(this.format);
-        if (findModeByExtension) mode = findModeByExtension.mode;
-      }
-
-      if (!mode) {
-        let findModeByFileName = CodeMirror.findModeByFileName(
-          `${this.name}.${this.format}`
-        );
-        if (findModeByFileName) mode = findModeByFileName.mode;
-      }
-
-      if (!mode) {
-        let findModeByName = CodeMirror.findModeByName(this.format);
-        if (findModeByName) mode = findModeByName.mode;
-      }
-
-      if (!mode) mode = "javascript";
-
-      this.cmOptions = {
-        ...this.cmOptions,
-        mode
-      };
-
-      let recaptchaScript = document.createElement("script");
-      recaptchaScript.setAttribute("src", `${this.cdn}/${mode}/${mode}.js`);
-      document.head.appendChild(recaptchaScript);
-    }
+    ...mapActions(["getData", "reset", "save", "duplicate", "raw"])
   },
   computed: {
     ...mapState(["name", "value", "format"]),
     ...mapGetters(["isDupable"]),
-    cmOptions: {
+    options: {
       get() {
         return {
-          ...this.localOp,
-          readOnly: this.isDupable,
-          mode: this.localMode
+          minimap: {
+            enabled: true
+          },
+          language: "javascript",
+          roundedSelection: false,
+          scrollBeyondLastLine: false,
+          matchBrackets: true,
+          readOnly: false,
+          theme: "vs-dark"
         };
       },
       set(newValue) {
@@ -111,9 +69,6 @@ export default {
         this.set({ name: "value", value: newValue });
       }
     }
-  },
-  mounted() {
-    if (this.format) this.loadMode();
   }
 };
 </script>
