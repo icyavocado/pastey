@@ -54,9 +54,8 @@ any [ 'post', 'options' ] => '/api/' => sub {
   if ($value) {
     my $result = addData($value);
     return {
-      name   => $result->name,
-      value  => $result->value,
-      format => guess( $result->value )
+      name  => $result->name,
+      value => $result->value
     };
   }
 };
@@ -78,16 +77,6 @@ fun addData($value) {
   my $result = $pastey_bin->new( { name => $name, value => $value } );
   $result->insert();
   return $result;
-}
-
-fun guess($text) {
-  my @foo = `echo '$text' | guesslang`;
-  my @result
-    = ( @foo && $foo[ scalar @foo - 1 ] )
-    ? $foo[ scalar @foo - 1 ] =~ /in \s*(\w+)/g
-    : undef;
-  return lc $result[0] if ( @result && $result[0] );
-  return undef;
 }
 
 dance;
