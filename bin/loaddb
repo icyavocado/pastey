@@ -5,6 +5,7 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 use lib "$FindBin::Bin/../local/lib/perl5";
+use Function::Parameters;
 use JSON;
 
 my $dancer_config;
@@ -17,7 +18,6 @@ BEGIN {
 use DBIx::Class::Schema::Loader qw/ make_schema_at /;
 use DBIx::Class;
 use Pastey::Schema;
-use Function::Parameters;
 
 my $path     = $dancer_config->{path};
 my $sql_path = "$path/bin/scripts/schema.sql";
