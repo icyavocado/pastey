@@ -28,15 +28,6 @@ html {
   overflow: hidden;
 }
 
-.CodeMirror {
-  font-family: "Fira Code";
-  min-height: 100vh;
-}
-
-.CodeMirror-scroll {
-  max-height: 100vh;
-}
-
 @media (max-width: 600px) {
   .home {
     grid-template-columns: 100%;
@@ -47,19 +38,10 @@ html {
     grid-row: 1;
     padding: 50px;
   }
-
-  .CodeMirror {
-    min-height: 75vh;
-  }
-
-  .CodeMirror-scroll {
-    max-height: 75vh;
-    grid-row: 2;
-  }
 }
 
 header {
-  background: #0c1120;
+  background: #1e1e1e;
   padding: 20px;
   width: 100%;
   height: 100%;
@@ -78,6 +60,10 @@ button {
   text-decoration: none;
 }
 
+.logo:visited {
+  color: white;
+}
+
 button:hover {
   background: black;
   color: white;
@@ -86,20 +72,4 @@ button:hover {
 
 button:disabled {
   color: grey;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-  height: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
