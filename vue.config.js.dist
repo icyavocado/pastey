@@ -18,8 +18,20 @@ module.exports = {
       args[0][0].from = dancerConfig.path + "/public-vue";
       return args;
     });
+     if(config.plugins.has('extract-css')) {
+      const extractCSSPlugin = config.plugin('extract-css')
+      extractCSSPlugin && extractCSSPlugin.tap(() => [{
+        filename: '[name].css',
+        chunkFilename: '[name].css'
+      }])
+    };
   },
-
+  configureWebpack: {
+    output: {
+      filename: '[name].js',
+      chunkFilename: '[name].js'
+    }
+  },
   baseUrl: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,
